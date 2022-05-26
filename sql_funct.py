@@ -15,10 +15,10 @@ def add_anek(text, user=None):
 def get_anek_random():
     conn = sqlite3.connect('anek_base.db')
     cur = conn.cursor()
-    aneki = cur.execute(f"""SELECT anektext FROM anekdots""").fetchall()
+    aneki = cur.execute(f"""SELECT anektext, time FROM anekdots""").fetchall()
     anek = random.choice(aneki)
     conn.close()
-    return anek[0]
+    return anek[0] + f'\nДобавлено {anek[1]}'
 
 
 def get_named_anek(theme):

@@ -4,6 +4,7 @@ from telegram import ReplyKeyboardMarkup
 import random
 from sql_funct import add_anek, get_anek_random, get_named_anek
 from datetime import datetime
+import sys
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG
@@ -67,33 +68,28 @@ def text(update, context):
     update.message.reply_text(random.choice(spis))
 
 
-def main():
-    updater = Updater(TOKEN)
-    dp = updater.dispatcher
-    conv_handler1 = ConversationHandler(
-        entry_points=[CommandHandler('anekdot', anek)],
-        states={
-            1: [MessageHandler(Filters.text & ~Filters.command, response)]
-        },
-        fallbacks=[CommandHandler('stop', stop)]
-    )
-    conv_handler2 = ConversationHandler(
-        entry_points=[CommandHandler('get_anekdot_name', anek_theme)],
-        states={
-            1: [MessageHandler(Filters.text & ~Filters.command, get_name_anek)]
-        },
-        fallbacks=[CommandHandler('stop', stop)]
-    )
-    dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(CommandHandler('get_anekdot_random', get_anek_rand))
-    text_handler = MessageHandler(Filters.text
-                                  & ~Filters.command, text)
-    dp.add_handler(conv_handler1)
-    dp.add_handler(conv_handler2)
-    dp.add_handler(text_handler)
-    updater.start_polling()
-    updater.idle()
-
-
-if __name__ == '__main__':
-    main()
+updater = Updater(TOKEN)
+dp = updater.dispatcher
+conv_handler1 = ConversationHandler(
+    entry_points=[CommandHandler('anekdot', anek)],
+    states={
+        1: [MessageHandler(Filters.text & ~Filters.command, response)]
+    },
+    fallbacks=[CommandHandler('stop', stop)]
+)
+conv_handler2 = ConversationHandler(
+    entry_points=[CommandHandler('get_anekdot_name', anek_theme)],
+    states={
+        1: [MessageHandler(Filters.text & ~Filters.command, get_name_anek)]
+    },
+    fallbacks=[CommandHandler('stop', stop)]
+)
+dp.add_handler(CommandHandler('start', start))
+dp.add_handler(CommandHandler('get_anekdot_random', get_anek_rand))
+text_handler = MessageHandler(Filters.text
+                              & ~Filters.command, text)
+dp.add_handler(conv_handler1)
+dp.add_handler(conv_handler2)
+dp.add_handler(text_handler)
+updater.start_polling()
+updater.idle()
