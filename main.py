@@ -3,8 +3,6 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler, Conve
 from telegram import ReplyKeyboardMarkup
 import random
 from sql_funct import add_anek, get_anek_random, get_named_anek
-from datetime import datetime
-import sys
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG

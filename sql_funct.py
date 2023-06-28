@@ -18,7 +18,7 @@ def get_anek_random():
     aneki = cur.execute(f"""SELECT anektext, time FROM anekdots""").fetchall()
     anek = random.choice(aneki)
     conn.close()
-    return anek[0] + f'\nДобавлено {anek[1]}'
+    return anek[0] + f'\n\nДобавлено {anek[1]}'
 
 
 def get_named_anek(theme):
